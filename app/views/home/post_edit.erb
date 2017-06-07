@@ -1,0 +1,37 @@
+<div class = "num">
+
+  <form method="post" action="/home/post_update">
+    <div class="form-group">
+      <label>이름</label>
+      <input name = "writer" type="text" class="form-control" id="exampleInputEmail1" value="<%=@post.writer%>" required>
+    </div>
+
+    <div class="form-group">
+      <label>날짜</label></br>
+      <input class="form-control" type="date" name="date" min="2017-05-31" value="<%=@post.date%>" required>
+    </div>
+
+    <div class="form-group">
+      <label>출발시간</label>
+      <input class="form-control" type="time" name="departuretime"  required>
+    </div>
+
+    <div class="form-group">
+      <label>어디에서 어디까지</label>
+      <input name = "route" type="text" class="form-control" id="exampleInputEmail1" value="<%=@post.route%>" required>
+    </div>
+
+    <div class="form-group">
+      <label>모집인원</label>
+      <input name = "people" type="number" class="form-control" id="exampleInputEmail1" value="<%=@post.people%>" required min="<%=@post.appliedpeople%>">
+    </div>
+
+    <input name="post_id" type="hidden" value="<%=@post.id%>">
+
+    <a href="/home/look/<%=@post.id%>"<button type="button" class="btn btn-default" data-dismiss="modal">취소</button></a>
+    <button type="submit" class="btn btn-primary">수정</button>
+  </form>
+
+
+
+</div>

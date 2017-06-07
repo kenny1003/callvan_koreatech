@@ -21,16 +21,13 @@ body  {
 }
 
 p {
-    padding: 30px;
+    margin-top: 10px;
+    padding: 25px;
     font-size: 40px;
     font-weight: bold;
     text-align: center;
     background-color: #ffffff;
     background-color: rgba( 255, 255, 255, 0.9 );
-}
-
-table{
-
 }
 
 #num{
@@ -42,6 +39,20 @@ table{
     font-weight: bold;
     text-align: center;
      background-color: rgba( 255, 255, 255, 0.9 );
+    min-height: 500px;
+    min-height: 200px;
+}
+.num{
+    margin-top: 80px;
+    margin-left: 400px;
+    margin-right: 400px;
+    font-size: 15px;
+    padding: 30px;
+    font-weight: bold;
+    text-align: center;
+    background-color: rgba( 255, 255, 255, 0.9 );
+    min-height: 500px;
+
 }
 
 #look{

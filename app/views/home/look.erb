@@ -32,17 +32,35 @@
         <td style="width: 30%"><%=@post.route%></td>
         <td><%=@post.people%></td>
         <td><%=@post.appliedpeople%></td>
-        <td>
-          <button type="button" class="btn btn-info btn-middle" data-toggle="modal" data-target="#together" data-title=""> <!--data-title에 포스트 번호 들어가면 됨 -->
-            수정
-          </button>
-
-          <button type="button" class="btn btn-info btn-middle">
-            삭제
-          </button>
 
 
-        </td>
+        <%if user_signed_in?%>
+          <% if current_user.id == @post.user_id %>
+              <td>
+                <a href="/home/post_edit/<%=@post.id%>">
+                  <button type="button" class="btn btn-info btn-middle" >
+                    수정
+                  </button>
+                </a>
+
+                <a href="/home/post_destroy/<%=@post.id%>">
+                  <button type="button" class="btn btn-info btn-middle btn-danger">
+                    삭제
+                  </button>
+                </a>
+
+              </td>
+
+          <%else%>
+                <td>작성자만 가능합니다.</td>
+          <%end%>
+        <%else%>
+            <td>*작성자만 가능합니다.</td>
+
+        <%end%>
+
+
+
       </tr>
 
 
@@ -71,17 +89,17 @@
 
             <td colspan="2">
               <%if user_signed_in?%>
-                  <%if current_user.id == t.post.id%>
+                  <%if current_user.id == t.post.user_id%>
                       <%=t.phone%>
 
                   <% else%>
-                      <%=truncate(t.phone, :length=>10)%>
-                      *콜밴대장만 확인할 수 있습니다.
+                      <%=truncate(t.phone, :length=>10)%></br>
+                      *모집을 시작한 사람만 확인할 수 있습니다.
                   <%end%>
 
               <%else%>
                   <%=truncate(t.phone, :length=>10)%> </br>
-                  <span style="font-size:12px">*콜밴대장만 확인할 수 있습니다.</span>
+                  <span style="font-size:12px">*모집을 시작한 사람만 확인할 수 있습니다.</span>
               <%end%>
 
 
@@ -89,12 +107,12 @@
 
             <td colspan="2">
               <%if user_signed_in?%>
-                  <%if current_user.id == t.post.id%>
+                  <%if current_user.id == t.post.user_id%>
                       <%=t.kakao%>
 
                   <% else%>
-                      <%=truncate(t.kakao, :length=>6)%>
-                      *콜밴대장만 확인할 수 있습니다.
+                      <%=truncate(t.kakao, :length=>6)%></br>
+                      *모집을 시작한 사람만 확인할 수 있습니다.
                   <%end%>
 
               <%else%>

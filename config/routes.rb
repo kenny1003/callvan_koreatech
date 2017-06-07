@@ -4,8 +4,14 @@ Rails.application.routes.draw do
   devise_for :users
   root 'home#index'
   get 'home/index'
+  get 'home/post_edit/:post_id'=> 'home#post_edit'
+  post 'home/post_update'
+
+  get 'home/post_destroy/:post_id'=>'home#post_destroy'
 
   get 'home/look/:post_id' => 'home#look'
+
+  get 'home/post_edit'
 
 
   post 'find/together'
