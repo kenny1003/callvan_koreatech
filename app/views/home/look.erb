@@ -1,0 +1,179 @@
+
+
+<p>#<span style="color:rgb(255, 127, 0)">코리아텍</span>_콜밴친구</p>
+
+<div id="look">
+
+  <a href ="/home/index">
+    <button type="button" class="btn btn-success btn-md">
+      <span style="font-size: 20px;" class="glyphicon glyphicon-arrow-left">뒤로</span>
+    </button>
+  </a>
+</br></br>
+
+  <div id = "look_table">
+    <table class="table table-bordered table-hover " bgcolor="black" >
+      <tbody>
+      <tr class="success">
+        <td style="width: 10%">모집한사람</td>
+        <td style="width: 10%">날짜</td>
+        <td style="width: 10%">출발시간</td>
+        <td style="width: 30%">어디에서 어디까지</td>
+        <td style="width: 10%">모집인원</td>
+        <td style="width: 10%">신청한사람</td>
+        <td style="width: 15%">수정/삭제</td>
+      </tr>
+      <tr>
+        <td><%=@post.writer%></td>
+        <td><%=@post.date%></td>
+        <td><%=@post.departuretime.strftime("%I:%M%p")  %></td>
+
+
+        <td style="width: 30%"><%=@post.route%></td>
+        <td><%=@post.people%></td>
+        <td><%=@post.appliedpeople%></td>
+        <td>
+          <button type="button" class="btn btn-info btn-middle" data-toggle="modal" data-target="#together" data-title=""> <!--data-title에 포스트 번호 들어가면 됨 -->
+            수정
+          </button>
+
+          <button type="button" class="btn btn-info btn-middle">
+            삭제
+          </button>
+
+
+        </td>
+      </tr>
+
+
+
+
+
+
+
+      </tbody>
+    </table>
+
+    <table class="table table-bordered table-hover " bgcolor="black" >
+      <tbody>
+      <tr class="info">
+        <td colspan="2" >신청자이름</td>
+        <td colspan="2" >연락처</td>
+        <td colspan="2" >카톡아이디</td>
+        <td colspan="1" >신청취소</td>
+      </tr>
+
+      <% @post.togethers.each do |t|%>
+          <tr>
+            <td colspan="2">
+              <%=t.name%>
+            </td>
+
+            <td colspan="2">
+              <%if user_signed_in?%>
+                  <%if current_user.id == t.post.id%>
+                      <%=t.phone%>
+
+                  <% else%>
+                      <%=truncate(t.phone, :length=>10)%>
+                      *콜밴대장만 확인할 수 있습니다.
+                  <%end%>
+
+              <%else%>
+                  <%=truncate(t.phone, :length=>10)%> </br>
+                  <span style="font-size:12px">*콜밴대장만 확인할 수 있습니다.</span>
+              <%end%>
+
+
+            </td>
+
+            <td colspan="2">
+              <%if user_signed_in?%>
+                  <%if current_user.id == t.post.id%>
+                      <%=t.kakao%>
+
+                  <% else%>
+                      <%=truncate(t.kakao, :length=>6)%>
+                      *콜밴대장만 확인할 수 있습니다.
+                  <%end%>
+
+              <%else%>
+                  <%=truncate(t.kakao, :length=>6)%> </br>
+                  <span style="font-size:12px">*콜밴대장만 확인할 수 있습니다.</span>
+              <%end%>
+
+            </td>
+
+            <td colspan="1">
+
+              <button type="button" class="btn btn-info btn-middle btn-danger" data-toggle="modal" data-target="#together_cancle" data-title="<%=t.id%>"> <!--data-title에 포스트 번호 들어가면 됨 -->
+                취소
+              </button>
+
+            </td>
+
+
+
+          </tr>
+      <%end%>
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+  </div>
+
+
+
+
+</div>
+
+
+
+
+<!-- Modal 같이타요 취소 -->
+<div class="modal fade" id="together_cancle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">같이타기 취소하기</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="/home/together_cancle">
+
+          <div class="form-group">
+            <label>비밀번호</label>
+            <input name = "pwd" type="password" class="form-control" id="exampleInputEmail1" placeholder="작성 시 입력했던 비밀번호를 입력해주세요.">
+          </div>
+
+          <input name = "togetherid" type="hidden" id="togetherid" id="exampleInputEmail1" value=""> </input>
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+          <button type="submit" class="btn btn-primary btn-danger">같이타기 취소하기</button>
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+        다른사람들과 함께 이용하는 서비스 입니다. 신중하게 결정해주세요
+
+      </div>
+    </div>
+  </div>
+</div> <!-- Modal 같이타요 취 끝 -->
+
+
+<script>
+    $('#together_cancle').on('show.bs.modal', function (event) { // myModal 윈도우가 오픈할때 아래의 옵션을 적용
+        var button = $(event.relatedTarget) // 모달 윈도우를 오픈하는 버튼
+        var togetherid = button.data('title') // 버튼에서 data-title 값을 titleTxt 변수에 저장
+        var modal = $(this)
+        document.getElementById('togetherid').value= togetherid ; //input의 히든값으로 포스트아이디를 넘겨준다. 참고 : http://blog.daum.net/dotiweb/12 , https://stackoverflow.com/questions/7609130/set-the-value-of-an-input-field
+    })
+
+</script>

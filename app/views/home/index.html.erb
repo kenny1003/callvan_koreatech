@@ -1,0 +1,287 @@
+
+<p>#<span style="color:rgb(255, 127, 0)">코리아텍</span>_콜밴친구</p>
+
+<div id="num">
+  ++오늘 지금 당장 콜밴친구++
+
+  <!-- Button trigger modal -->
+  <div id ="collect_people">
+    <button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#requestcallvan">
+      <span style="font-size: 20px;">콜밴친구 모집하기</span>
+    </button>
+  </div>
+
+  <div class="table-responsive">
+  <table class="table table-bordered table-hover " bgcolor="black" >
+    <tbody>
+    <tr class="success">
+      <td style="width:15%">콜밴 대장님</td>
+      <td style="width:10%">출발날짜</td>
+      <td style="width:10%">출발시간</td>
+      <td style="width:25%">어디에서 어디까지</td>
+      <td style="width:10%">모집인원</td>
+      <td style="width:10%">신청한사람</td>
+      <td style="width:10%">같이타요</td>
+      <td style="width:10%">자세히보기</td>
+    </tr>
+
+    <%@post.each do |p|%>
+        <%if p.appliedpeople == p.people - 1%>
+            <tr class="danger">
+        <%else%>
+            <tr>
+        <%end%>
+
+          <td><%=p.writer%></td>
+          <td><%=p.date%></td>
+          <td><%=p.departuretime.strftime("%I:%M%p")%></td>
+          <td><%=p.route%></td>
+          <td><%=p.people%></td>
+          <td><%=p.appliedpeople%></td>
+          <td>
+            <%if p.people == p.appliedpeople%>
+                <span style="font-color:red">꽉참</span>
+            <%else%>
+              <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#together" data-title="<%=p.id%>"> <!--data-title에 포스트 번호 들어가면 됨 -->
+                같이타요
+              </button>
+            <%end%>
+
+          </td>
+
+          <td>
+            <a href="/home/look/<%=p.id%>">
+            <button type="button" class="btn btn-info btn-sm">
+              <span class="glyphicon glyphicon-zoom-in" aria-hidden="true"></span>
+              보기
+            </button>
+            </a>
+
+          </td>
+        </tr>
+
+    <%end%>
+
+
+    </tbody>
+  </table>
+
+  </div>
+  <div class="digg_pagination" style="text-align:center; margin-top:-10px;"><%= will_paginate @post %></div>
+
+
+
+
+</div>
+
+<!-- Modal 같이타요 -->
+<div class="modal fade" id="together" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">같이타기 신청</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post" action="/find/together">
+          <div class="form-group">
+            <label>이름</label>
+            <input name = "name" type="text" class="form-control" id="exampleInputEmail1" placeholder="홍길동">
+          </div>
+
+          <div class="form-group">
+            <label>핸드폰번호</label>
+            <input name = "phone" type="text" class="form-control" id="exampleInputEmail1" placeholder="- 없이 번호만 입력해주세요. ">
+          </div>
+
+          <div class="form-group">
+            <label>카톡아이디</label>
+            <input name = "kakao" type="text" class="form-control" id="exampleInputEmail1" placeholder="카카오톡 아이디를 입력해주세">
+          </div>
+
+          <div class="form-group">
+            <label>비밀번호</label>
+            <input name = "pwd" type="password" class="form-control" id="exampleInputEmail1" placeholder=" '같이타기'를 취소할 때 필요합니다.">
+          </div>
+
+          <input name = "postid" type="hidden" id="postnumber" id="exampleInputEmail1" value=""> </input>
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+          <button type="submit" class="btn btn-primary">같이타기 신청</button>
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+        다른사람들과 함께 이용하는 서비스 입니다. 신중하게 신청해주세요
+
+      </div>
+    </div>
+  </div>
+</div> <!-- Modal 같이타요 끝 -->
+
+
+
+<!-- Modal 자세히보기 -->
+<div class="modal fade" id="look" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">자세히보기</h4>
+        *모집 글을 올린 사람만 전체 신청자의 핸드폰번호를 볼 수 있습니다.
+      </div>
+      <div class="modal-body">
+
+
+
+        <form method="post" action="/find/together">
+          <div class="form-group">
+            <label>이름</label>
+            <input name = "name" type="text" class="form-control" id="exampleInputEmail1" placeholder="홍길동">
+          </div>
+
+          <div class="form-group">
+            <label>핸드폰번호</label>
+            <input name = "phone" type="text" class="form-control" id="exampleInputEmail1" placeholder="- 없이 번호만 입력해주세요. ">
+          </div>
+
+          <div class="form-group">
+            <label>카톡아이디</label>
+            <input name = "kakao" type="text" class="form-control" id="exampleInputEmail1" placeholder="카카오톡 아이디를 입력해주세">
+          </div>
+
+          <div class="form-group">
+            <label>비밀번호</label>
+            <input name = "pwd" type="password" class="form-control" id="exampleInputEmail1" placeholder=" '같이타기'를 취소할 때 필요합니다.">
+          </div>
+
+          <input name = "postid" type="hidden" id="postnumber" id="exampleInputEmail1" value=""> </input>
+
+          <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+          <button type="submit" class="btn btn-primary">같이타기 신청</button>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+
+      </div>
+    </div>
+  </div>
+</div> <!-- Modal 자세히보기 끝 -->
+
+
+
+
+
+<!-- Modal 콜밴친구모집-->
+<% if user_signed_in?%>
+    <div class="modal fade" id="requestcallvan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">콜밴친구 모집하기</h4>
+          </div>
+          <div class="modal-body">
+            <form method="post" action="/find/write">
+              <div class="form-group">
+                <label>이름</label>
+                <input name = "writer" type="text" class="form-control" id="exampleInputEmail1" placeholder="홍길동" required>
+              </div>
+
+              <div class="form-group">
+                <label>날짜</label></br>
+                <input class="form-control" type="date" name="date" min="2017-05-31" required>
+              </div>
+
+              <div class="form-group">
+                <label>출발시간</label>
+                <input class="form-control" type="time" name="departuretime" required>
+              </div>
+
+              <div class="form-group">
+                <label>어디에서 어디까지</label>
+                <input name = "route" type="text" class="form-control" id="exampleInputEmail1" placeholder="한기대->신세계백화점" required>
+              </div>
+
+              <div class="form-group">
+                <label>모집인원</label>
+                <input name = "people" type="number" class="form-control" id="exampleInputEmail1" placeholder="모집인원" required min="2">
+              </div>
+
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">작성완료</button>
+            </form>
+
+
+          </div>
+          <div class="modal-footer">
+
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+<%else%>
+    <div class="modal fade" id="requestcallvan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">로그인</h4>
+          </div>
+          <div class="modal-body">
+            콜밴인원을 모집하기 위해, 로그인을 해주세요.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+<%end%>
+
+
+
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker();
+    });
+</script>
+
+
+
+<script>
+    $('#together').on('show.bs.modal', function (event) { // myModal 윈도우가 오픈할때 아래의 옵션을 적용
+        var button = $(event.relatedTarget) // 모달 윈도우를 오픈하는 버튼
+        var postnum = button.data('title') // 버튼에서 data-title 값을 titleTxt 변수에 저장
+        var modal = $(this)
+        document.getElementById('postnumber').value= postnum ; //input의 히든값으로 포스트아이디를 넘겨준다. 참고 : http://blog.daum.net/dotiweb/12 , https://stackoverflow.com/questions/7609130/set-the-value-of-an-input-field
+    })
+
+    $('#look').on('show.bs.modal', function (event) { // myModal 윈도우가 오픈할때 아래의 옵션을 적용
+        var button = $(event.relatedTarget) // 모달 윈도우를 오픈하는 버튼
+        var postnum = button.data('title') // 버튼에서 data-title 값을 titleTxt 변수에 저장
+        var modal = $(this)
+        document.getElementById('summary').text= postnum ;
+        document.getElementById('postnumber').value= postnum ; //input의 히든값으로 포스트아이디를 넘겨준다. 참고 : http://blog.daum.net/dotiweb/12 , https://stackoverflow.com/questions/7609130/set-the-value-of-an-input-field
+    })
+
+
+</script>
+
+
+
+
+
+
+
+
+
+
+

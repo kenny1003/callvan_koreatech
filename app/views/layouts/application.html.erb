@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>KoreatehcRoommie</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+
+  <script type="text/javascript" src="/bower_components/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/bower_components/moment/min/moment.min.js"></script>
+  <script type="text/javascript" src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+  <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="/bower_components/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
+
+
+
+</head>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">
+        같이탈래? - 코리아텍 콜밴친구 찾기 서비스
+      </a>
+      <img alt="Brand" src="http://www.northwestern.edu/offcampus/resources/how-tos/assets/make-it-work.png" height="50">
+
+
+      <div id ="signin">
+      <%if user_signed_in?%>
+            <span style="font-size:25px"><%=current_user.email%></span> 님, 환영합니다.
+          <a href ="/users/sign_out">
+            <button  type="button" class="btn btn-warning btn-md">
+              로그아웃
+            </button>
+          </a>
+      <%else%>
+          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sign_in">
+            로그인하기
+          </button>
+
+          <button  type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#sign_up">
+            등록하기
+          </button>
+      <%end%>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+
+<!--회원가입, 로그인 모달  -->
+<!-- Modal -->
+<div class="modal fade" id="sign_in" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h2 class="modal-title" id="myModalLabel">로그인하기</h2>
+      </div>
+      <div class="modal-body">
+        <%= form_for("user", :url => session_path(:user)) do |f| %>
+            <div class="field" id = "sign_in1">
+              <%= f.label :이메일_주소 %><br />
+              <%= f.email_field :email, autofocus: true, class: "emailinput" %>
+            </div>
+            </br>
+
+            <div class="field">
+              <%= f.label :비밀번호 %><br />
+              <%= f.password_field :password, autocomplete: "off", class:"emailinput" %>
+            </div>
+
+            <div class="actions">
+              <%= f.submit "로그인", class:"devisebtn" %>
+            </div>
+
+            <div class="actions">
+              <button type="button" class="closebtn" data-dismiss="modal">닫기</button>
+            </div>
+
+            </div>
+            <div class="modal-footer">
+              footer
+            </div>
+
+        <% end %>
+
+        </div>
+  </div>
+
+
+
+
+
+</div>
+
+<div class="modal fade" id="sign_up" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">등록하기</h4>
+      </div>
+      <div class="modal-body">
+        <%= form_for("user", url: registration_path(:user)) do |f| %>
+
+            <div class="field">
+              <%= f.label :이메일주소 %><br />
+              <%= f.email_field :email, autofocus: true, class:"emailinput"%>
+            </div>
+
+            <div class="field">
+              <%= f.label :비밀번호 %>
+              <% if @minimum_password_length %>
+                  <em>(<%= @minimum_password_length %> characters minimum)</em>
+              <% end %><br />
+              <%= f.password_field :password, autocomplete: "off", class:"emailinput" %>
+            </div>
+
+            <div class="field">
+              <%= f.label :비밀번호_확인 %><br />
+              <%= f.password_field :password_confirmation, autocomplete: "off", class:"emailinput" %>
+            </div>
+
+            <div class="actions">
+              <%= f.submit "등록하기", class:"devisebtn" %>
+            </div>
+
+            <div class="actions">
+              <button type="button" class="closebtn" data-dismiss="modal">닫기</button>
+            </div>
+      </div>
+            <div class="modal-footer">
+              -
+            </div>
+        <% end %>
+
+    </div>
+
+  </div>
+</div>
+
+<%= yield %>
+
+</body>
+</html>
