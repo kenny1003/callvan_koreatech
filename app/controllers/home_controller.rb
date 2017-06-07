@@ -3,7 +3,7 @@ class HomeController < ApplicationController
     #@post = Post.all
     @temp = Post.order(date: :desc)
 
-    @today = Time.now.to_date
+    @today = Time.zone.now.to_date
 
     # User.where("id > ?", 200)
     @temp2 = Post.where("date>=?",@today).order(:date) #오늘 날짜 이전 데이터는 출력하지 않는다. ,날짜순으로 출력한다.

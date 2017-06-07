@@ -3,7 +3,7 @@
 
 <div id="num">
   <h1>콜밴친구찾기</h1>
-  *출발날짜가 오늘이랑 [<%=Time.now.to_date%>] 가까운 순서로 정렬됩니다.</br>
+  *출발날짜가 오늘이랑 [<%=Time.zone.now.to_date%>] 가까운 순서로 정렬됩니다.</br>
   *출발날짜가 이미 지난 글은 출력되지 않습니다. (ex 출발날짜가 어제였던 글은 출력되지 않습니다.)
 
   <!-- Button trigger modal -->
@@ -39,15 +39,15 @@
           <td><%=p.writer%></td>
           
           
-          <%if p.date.to_date == Date.today.to_date%>
-            <td>오늘1</td>
+          <%if p.date.to_date == Time.zone.today.to_date%>
+            <td>오늘</td>
           <%else%>
             <td>
             <%=p.date%>
               <!-- 요일 넣기-->
               <%@temp_day=p.date.wday%>
               <%@day = ["일",   "월","화","수","목","금","토"]%>
-              [<%=@day[@temp_day]%>]  1
+              [<%=@day[@temp_day]%>]
             </td>
           <%end%>
           <td><%=p.departuretime.strftime("%I:%M%p")%></td>
