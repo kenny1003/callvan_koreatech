@@ -39,8 +39,8 @@
           <td><%=p.writer%></td>
           
           
-          <%if p.date.to_date == Date.today%>
-            <td>오늘</td>
+          <%if p.date.to_date == Date.today.to_date%>
+            <td>오늘1</td>
           <%else%>
             <td>
             <%=p.date%>
