@@ -36,7 +36,7 @@
       <img alt="Brand" src="http://www.northwestern.edu/offcampus/resources/how-tos/assets/make-it-work.png" height="50">
 
 
-      <div id ="signin">
+      <div id ="signin2">
       <%if user_signed_in?%>
             <span style="font-size:25px"><%=current_user.email%></span> 님, 환영합니다.
           <a href ="/users/sign_out">
@@ -45,11 +45,11 @@
             </button>
           </a>
       <%else%>
-          <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#sign_in">
+          <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#sign_in">
             로그인하기
           </button>
 
-          <button  type="button" class="btn btn-warning btn-lg" data-toggle="modal" data-target="#sign_up">
+          <button  type="button" class="btn btn-warning btn-md" data-toggle="modal" data-target="#sign_up">
             등록하기
           </button>
       <%end%>
