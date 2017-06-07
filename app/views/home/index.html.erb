@@ -3,6 +3,8 @@
 
 <div id="num">
   <h1>콜밴친구찾기</h1>
+  *출발날짜가 오늘이랑 [<%=Time.now.to_date%>] 가까운 순서로 정렬됩니다.</br>
+  *출발날짜가 이미 지난 글은 출력되지 않습니다. (ex 출발날짜가 어제였던 글은 출력되지 않습니다.)
 
   <!-- Button trigger modal -->
   <div id ="collect_people">
@@ -12,13 +14,13 @@
   </div>
 
   <div class="table-responsive">
-  <table class="table table-bordered table-hover " bgcolor="black" >
+  <table class="table table-bordered " bgcolor="black" >
     <tbody>
-    <tr class="success">
-      <td style="width:15%">콜밴 대장님</td>
-      <td style="width:10%">출발날짜</td>
+    <tr bgcolor="green" style="color:white;">
+      <td style="width:10%;">리더</td>
+      <td style="width:15%">출발날짜</td>
       <td style="width:10%">출발시간</td>
-      <td style="width:25%">어디에서 어디까지</td>
+      <td style="width:25%">어디에서 > 어디까지</td>
       <td style="width:10%">모집인원</td>
       <td style="width:10%">신청한사람</td>
       <td style="width:10%">같이타요</td>
@@ -28,12 +30,21 @@
     <%@post.each do |p|%>
         <%if p.appliedpeople == p.people - 1%>
             <tr class="danger">
+        <%elsif p.people==p.appliedpeople%>
+            <tr class="warning">
         <%else%>
             <tr>
         <%end%>
 
           <td><%=p.writer%></td>
-          <td><%=p.date%></td>
+          <td><%=p.date%>
+            <!-- 요일 넣기-->
+            <%@temp_day=p.date.wday%>
+            <%@day = ["일",   "월","화","수","목","금","토"]%>
+            [<%=@day[@temp_day]%>]
+
+
+          </td>
           <td><%=p.departuretime.strftime("%I:%M%p")%></td>
           <td><%=p.route%></td>
           <td><%=p.people%></td>
@@ -42,7 +53,7 @@
             <%if p.people == p.appliedpeople%>
                 <span style="font-color:red">꽉참</span>
             <%else%>
-              <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#together" data-title="<%=p.id%>"> <!--data-title에 포스트 번호 들어가면 됨 -->
+              <button type="button" class="btn btn-info btn-sm btn-warning" data-toggle="modal" data-target="#together" data-title="<%=p.id%>"> <!--data-title에 포스트 번호 들어가면 됨 -->
                 같이타요
               </button>
             <%end%>
@@ -201,7 +212,7 @@
               </div>
 
               <div class="form-group">
-                <label>어디에서 어디까지</label>
+                <label>어디에서 -> 어디까지</label>
                 <input name = "route" type="text" class="form-control" id="exampleInputEmail1" placeholder="한기대->신세계백화점" required>
               </div>
 
@@ -210,7 +221,12 @@
                 <input name = "people" type="number" class="form-control" id="exampleInputEmail1" placeholder="모집인원" required min="2">
               </div>
 
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <div class="form-group">
+                <label>남김 말</label>
+                <input name = "comment" type="text" class="form-control" id="exampleInputEmail1" placeholder="10월/3일 토익시험 팸 모집해요" required>
+              </div>
+
+              <button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
               <button type="submit" class="btn btn-primary">작성완료</button>
             </form>
 

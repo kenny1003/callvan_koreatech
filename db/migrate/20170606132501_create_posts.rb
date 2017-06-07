@@ -9,6 +9,7 @@ class CreatePosts < ActiveRecord::Migration
       t.string :route #경로
       t.integer :people #모집인원
       t.integer :appliedpeople #신청인원
+      t.string :comment #남김 말
 
 
 

@@ -39,8 +39,7 @@ p {
     font-weight: bold;
     text-align: center;
      background-color: rgba( 255, 255, 255, 0.9 );
-    min-height: 500px;
-    min-height: 200px;
+    min-height: 550px;
 }
 .num{
     margin-top: 80px;

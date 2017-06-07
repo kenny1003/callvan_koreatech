@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20170606145043) do
     t.string   "route"
     t.integer  "people"
     t.integer  "appliedpeople"
+    t.string   "comment"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
   end

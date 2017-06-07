@@ -31,6 +31,8 @@ class FindController < ApplicationController
     @post.departuretime = params[:departuretime]
     @post.route = params[:route]
     @post.people = params[:people]
+    @post.comment = params[:comment]
+
     @post.appliedpeople = 0
     @post.user_id = current_user.id
 

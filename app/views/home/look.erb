@@ -12,10 +12,10 @@
 </br></br>
 
   <div id = "look_table">
-    <table class="table table-bordered table-hover " bgcolor="black" >
+    <table class="table table-bordered " bgcolor="black" >
       <tbody>
       <tr class="success">
-        <td style="width: 10%">모집한사람</td>
+        <td style="width: 10%">리더</td>
         <td style="width: 10%">날짜</td>
         <td style="width: 10%">출발시간</td>
         <td style="width: 30%">어디에서 어디까지</td>
@@ -52,15 +52,18 @@
               </td>
 
           <%else%>
-                <td>작성자만 가능합니다.</td>
+                <td>리더만 가능합니다.</td>
           <%end%>
         <%else%>
-            <td>*작성자만 가능합니다.</td>
+            <td>*리더만 가능합니다.</td>
 
         <%end%>
 
 
 
+      </tr>
+      <tr>
+        <td colspan="7">남김 말 : <%=@post.comment%></td>
       </tr>
 
 
@@ -94,12 +97,12 @@
 
                   <% else%>
                       <%=truncate(t.phone, :length=>10)%></br>
-                      *모집을 시작한 사람만 확인할 수 있습니다.
+                      *리더만 확인할 수 있습니다.
                   <%end%>
 
               <%else%>
                   <%=truncate(t.phone, :length=>10)%> </br>
-                  <span style="font-size:12px">*모집을 시작한 사람만 확인할 수 있습니다.</span>
+                  <span style="font-size:12px">*리더만 확인할 수 있습니다.</span>
               <%end%>
 
 
@@ -112,12 +115,12 @@
 
                   <% else%>
                       <%=truncate(t.kakao, :length=>6)%></br>
-                      *모집을 시작한 사람만 확인할 수 있습니다.
+                      *리더만 확인할 수 있습니다.
                   <%end%>
 
               <%else%>
                   <%=truncate(t.kakao, :length=>6)%> </br>
-                  <span style="font-size:12px">*콜밴대장만 확인할 수 있습니다.</span>
+                  <span style="font-size:12px">*리더만 확인할 수 있습니다.</span>
               <%end%>
 
             </td>

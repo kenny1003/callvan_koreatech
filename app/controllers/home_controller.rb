@@ -11,6 +11,12 @@ class HomeController < ApplicationController
 
     @post = @temp2.all.paginate(:page=>params[:page], :per_page=>7)
 
+    #오늘의 요일 보내기
+    @temp_day = Date.today.wday
+    @day = ["일",   "월","화","수","목","금","토"]
+    @temp_today =@day[@temp_day]
+
+
 
 
 
@@ -25,7 +31,13 @@ class HomeController < ApplicationController
     if user_signed_in?
       if current_user.id == Post.find(params[:post_id]).user_id
         @temp_post = Post.find(params[:post_id])
+
+        #해당 포스트에 같이가기를 신청했던 글도 삭제 한다.
+        @temp_post.togethers.each do |t|
+          t.destroy
+        end
         @temp_post.destroy
+
       end
     end
 
@@ -51,6 +63,7 @@ class HomeController < ApplicationController
     @post.departuretime = params[:departuretime]
     @post.route = params[:route]
     @post.people = params[:people]
+    @post.comment = params[:comment]
     #@post.user_id = current_user.id
 
     @post.save
