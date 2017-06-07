@@ -47,7 +47,7 @@
               <!-- 요일 넣기-->
               <%@temp_day=p.date.wday%>
               <%@day = ["일",   "월","화","수","목","금","토"]%>
-              [<%=@day[@temp_day]%>]
+              [<%=@day[@temp_day]%>] 1
             </td>
           <%end%>
           <td><%=p.departuretime.strftime("%I:%M%p")%></td>
