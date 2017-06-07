@@ -37,14 +37,19 @@
         <%end%>
 
           <td><%=p.writer%></td>
-          <td><%=p.date%>
-            <!-- 요일 넣기-->
-            <%@temp_day=p.date.wday%>
-            <%@day = ["일",   "월","화","수","목","금","토"]%>
-            [<%=@day[@temp_day]%>]
-
-
-          </td>
+          
+          
+          <%if p.date.to_date == Time.now.to_date%>
+            <td>오늘</td>
+          <%else%>
+            <td>
+            <%=p.date%>
+              <!-- 요일 넣기-->
+              <%@temp_day=p.date.wday%>
+              <%@day = ["일",   "월","화","수","목","금","토"]%>
+              [<%=@day[@temp_day]%>]
+            </td>
+          <%end%>
           <td><%=p.departuretime.strftime("%I:%M%p")%></td>
           <td><%=p.route%></td>
           <td><%=p.people%></td>
